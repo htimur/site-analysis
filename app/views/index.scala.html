@@ -1,20 +1,32 @@
-@*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
-@(message: String)
+@(userForm: Form[ScrapeInput], result: Option[ScraperResult]=None)(implicit message: Messages)
+
+@import models._
+@import helper._
+
+@implicitFC = @{ b3.horizontal.fieldConstructor("col-md-4", "col-md-8") }
 
 @*
  * Call the `main` template with two arguments. The first
  * argument is a `String` with the title of the page, the second
  * argument is an `Html` object containing the body of the page.
  *@
-@main("Welcome to Play") {
+@main("Welcome to Site Analysis") {
 
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     *@
-    @play20.welcome(message, style = "Scala")
+    @if(userForm.hasGlobalErrors) {
+    <ul>
+        @for(error <- userForm.globalErrors) {
+        <li>@Messages(error.messages, error.args)</li>
+        }
+    </ul>
+    }
+    @b3.form(routes.HomeController.scrapeUrl()) {
+        @b3.url( userForm("url"), '_label -> "URL", 'placeholder -> "type url here" )
+        @b3.submit('class -> "btn btn-default"){ <span class="glyphicon glyphicon-ok"></span> Submit }
+    }
+
+    @if(result.isDefined) {
+    <div class="alert alert-danger" role="alert">@result.get.message</div>
+
+    }
 
 }
