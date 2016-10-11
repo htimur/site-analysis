@@ -3,7 +3,6 @@ package controllers
 import java.net.URL
 import javax.inject._
 
-import models.ScrapeInput
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc._

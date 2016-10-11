@@ -2,4 +2,73 @@
 
 @import models._
 
-@result.message
+
+@*
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+@main(result.message) {
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr >
+            <td class="col-md-2">Name</td>
+            <td class="col-md-5">Result</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>html version</td>
+            <td>@result.data.get.htmlVersion</td>
+        </tr>
+        <tr>
+            <td>title</td>
+            <td>@result.data.get.title</td>
+        </tr>
+        <tr>
+            <td>headings</td>
+            <td>
+                @if(result.data.get.headings.isDefined) {
+                <ul class="list-group col-md-2">
+                    @for((key, value) <- result.data.get.headings.get){
+                    <li class="list-group-item">
+                        <span class="badge">@value</span>
+                        @key
+                    </li>
+                    }
+                </ul>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>links</td>
+            <td>
+                @if(result.data.get.links.isDefined) {
+                <ul class="list-group col-md-5">
+                    <li class="list-group-item">
+                        <span class="badge">@result.data.get.links.get.internalLinkCount</span>
+                        Number of internal links
+                    </li>
+                    <li class="list-group-item">
+                        <span class="badge">@result.data.get.links.get.externalLinkCount</span>
+                        Number of external links
+                    </li>
+                </ul>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>have login form</td>
+            <td>
+                @if(result.data.get.haveLoginForm) {
+                YES
+                } else {
+                NO
+                }
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+}

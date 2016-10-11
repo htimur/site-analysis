@@ -2,17 +2,19 @@ package services.scraper
 
 import akka.actor.ActorSystem
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
+import models.ScraperData
 import org.scalatest.{BeforeAndAfterAll, FlatSpecLike, Matchers}
 import services.scraper.extractor._
 
+import scala.concurrent.duration._
 import scala.io.Source
 import scala.util.Success
-import scala.concurrent.duration._
 
 /**
   * @author Timur Khamrakulov <timur.khamrakulov@gmail.com>.
   */
 class ParserActorSpec extends TestKit(ActorSystem("MySpec")) with FlatSpecLike with Matchers with ImplicitSender with BeforeAndAfterAll {
+
   import ParserActorProtocol._
   import akka.pattern.ask
 
@@ -38,7 +40,7 @@ class ParserActorSpec extends TestKit(ActorSystem("MySpec")) with FlatSpecLike w
     resultData.haveLoginForm shouldBe true
     resultData.headings shouldBe Some(Map("h1" -> 1))
 
-    resultData.links shouldBe a[Some[Links]]
+    resultData.links shouldBe a[Some[_]]
     val links = resultData.links.get
     links.externalLinkCount shouldBe 0
     links.internalLinkCount shouldBe 10

@@ -1,5 +1,6 @@
 package services.scraper
 
+import models.{Links, ScraperData}
 import org.jsoup.Jsoup
 import org.scalatest._
 import services.scraper.extractor._
@@ -35,7 +36,7 @@ class ExtractorSpec extends FlatSpec with Matchers {
     val extractor = LinkExtractor()
     val extractedData = extractor.apply(document, data)
     val links = extractedData.links
-    links shouldBe a[Some[Links]]
+    links shouldBe a[Some[_]]
     links.get.externalLinkCount shouldBe 0
     links.get.internalLinkCount shouldBe 10
   }

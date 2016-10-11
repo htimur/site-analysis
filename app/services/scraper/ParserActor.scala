@@ -13,8 +13,6 @@ object ParserActorProtocol {
 
   case class Parse(content: String, data: ScraperData)
 
-  case class Extract(receiver: ActorRef, document: Document, data: ScraperData)
-
   case class Result(data: ScraperData)
 }
 
@@ -26,6 +24,7 @@ object ParserActor {
 }
 
 class ParserActor(extractors: List[Extractor[ScraperData]]) extends Actor with ActorLogging {
+  private case class Extract(receiver: ActorRef, document: Document, data: ScraperData)
 
   import ParserActorProtocol._
 
